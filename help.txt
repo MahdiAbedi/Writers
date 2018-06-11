@@ -1,0 +1,51 @@
+راهنمای کد نویسی:
+
+####################################################################
+ $suzhes=Suzhe::where(function($query) 
+            {
+                $data=[];
+                /**
+                 * اگر کاربر مدیر یا عضو ستاد شبکه نبود فقط بتواند یادداشتهای حلقه خود را ببیند
+                 */
+                if (!auth()->user()->hasRole(['modir','shabake']))
+                 {
+                    $halghes=auth()->user()->halghe;
+                    foreach($halghes as $halghe)
+                    { 
+                        $data[]=$halghe->id;  
+                    }
+                    //بغییر از مدیر و ستاد شبکه بقیه فقط سوژه های تایید شده را مشاهده میکنند
+                    $query->where('status','منتشر شده');
+                    $query->whereIn('halghe_id', $data);
+                    return $query;
+                }
+    
+            });
+            
+        $suzhes=$suzhes->get();
+        //dd($suzhes);
+        return view('pages.suzhe.index',compact('suzhes'));
+
+####################################################################
+        //به دست آورد تعداد و وضعیت هر یادداشت
+        // SELECT COUNT(id), `status`
+        // FROM notes
+        // WHERE user_id =30
+        // GROUP BY `status`;
+       
+        /**
+         * تعداد و سمت هر کاربر
+         */
+
+        // SELECT COUNT(model_id), `role_id` ,(select display_name from roles where id=role_id) as 'rolename'
+        // FROM model_has_roles
+        // GROUP BY `role_id`;
+        // return view('home');
+####################################################################
+ if (Carbon::now()->diffInHours($note->updated_at)>48) {
+    $this->saveUserPoint(-2,'کسر امتیاز به خاطر ارسال نسخه اولیه یادداشت بعد از گذشت 48 ساعت از اعلام آمادگی');
+    #ثبت ارسال نسخه اولیه در تاریخچه یادداشت
+    $this->addToNoteHistory($note->id,'نسخه اولیه توسط یادداشت نویس ارسال شد.','ارسال نسخه اولیه');
+}
+
+####################################################################

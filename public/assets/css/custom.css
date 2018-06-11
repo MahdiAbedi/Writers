@@ -1,0 +1,77 @@
+@font-face {
+ font-family: 'ilyaweb';
+ src:url('fonts/Vazir.eot?#') format('eot'), /* IE6?"8 */
+   url('fonts/Vazir.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ 
+ 
+ url('fonts/Vazir.ttf') format('truetype');  /* Saf3?"5, Chrome4+, FF3.5, Opera 10+ */
+} 
+body,a {
+text-align:right;
+direction:rtl;	
+font-family:'vazir',ilyaweb,'ilyaweb';
+}
+
+.collapsed .sidebar-menu-inner ul li a{text-align:center;}
+.sidebar-menu .main-menu li.has-sub > a::before{transform:rotate(90deg);float:left;}
+.sidebar-menu .main-menu a > .label{margin-right:5px;}
+footer.main-footer .footer-text{float:right;}
+.page-body.right-sidebar .page-container > *{direction:rtl;}
+footer.main-footer .go-up{float:left;}
+.label{
+  font-family: 'b homa','BHoma',tahoma;
+  font-size: 12px;
+}
+
+th {
+  text-align: right;
+}
+.dataTables_wrapper .table thead>tr .sorting:before, .dataTables_wrapper .table thead>tr .sorting_asc:before, .dataTables_wrapper .table thead>tr .sorting_desc:before{float: left;}
+
+.panel .panel-heading>.panel-title {
+  float: right;
+  font-size: 17px;
+}
+
+.panel .panel-heading>.panel-options {
+  float: left;
+  font-size: 13px;
+}
+.select2-search-choice-close {left: 3px !important;right:unset !important;}
+
+.ms-container .ms-selectable, .ms-container .ms-selection{float:right !important;}
+.ms-container .ms-selection {
+  float: left !important;}
+/*برای تنظیم ارتفاع note-wrap*/
+  .notes-env .notes-list .write-pad textarea{min-height: 250px;}
+  .form-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
+}
+/*مربوط به دکمه های پرینت و پی دی اف و ...*/
+.dt-buttons .dt-button {
+  padding: 0.5rem 1.25rem;
+  border-radius: 5px;
+  background: #68b828;
+  color: #fff;
+  margin-right: 3px;
+  display: inline-block;
+}
+.dt-buttons {
+  float: left;
+}
+/*pdf,print , ... buttons*/
+
+.page-container .main-content .page-title .title-env {
+  float: right;
+  padding-right: 30px;
+}
+/*تاریخچه هر یادداشت*/
+.cbp_tmtimeline{direction: ltr;}
+.page-body .main-content .cbp_tmtimeline>li .cbp_tmlabel.empty{text-align: left;}
+
+/*پایان تاریخچه*/
