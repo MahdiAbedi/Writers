@@ -36,7 +36,7 @@
                                                             @if(file_exists(public_path().'/uploads/resaneha/'.$media->id.'.jpg'))
                                                             <img src="{{'/uploads/resaneha/'.$media->id.'.jpg'}}" class="img-circle" alt="{{$media->name}}" width="60" height="60">
                                                             @else
-                                                            <img src="/assets/resaneha/unknown.jpg" class="img-circle img-corona" alt="user-pic" width="60" height="60" />
+                                                            <img src="/uploads/resaneha/unknown.jpg" class="img-circle img-corona" alt="user-pic" width="60" height="60" />
                                                             @endif
                                                       
                                                     </div>

@@ -13,4 +13,10 @@ class Media extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    //هر رسانه میتواند شامل چندین یادداشت باشد
+    public function notes()
+    {
+        return $this->belongsToMany(Note::class,'notes_media');
+    }
 }

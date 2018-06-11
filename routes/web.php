@@ -27,6 +27,7 @@ Route::resource('halghe', 'HalgheController');
 //یادداشتهای نهایی شده
 //این مسیر باید بالاتر از روتهای دیگه باشه
 Route::get('/notes/final','NoteController@finalNotes');
+
 Route::resource('notes', 'NoteController');
 //مشاهده یادداشتهای در انتظار تعیین ناظر محتوایی
 Route::get('/set-nazer','NoteController@withoutNazer');
@@ -46,9 +47,10 @@ Route::get('/arzyabi','NoteController@listArzyabi');
 //مشاهده لیست یادداشتهای در انتظار بررسی محتوایی
 Route::get('/barrasi','NoteController@listBarrasi');
 //یادداشتهای منتشر شده در رسانه ها
-Route::get('/montasherShode','NoteController@montasherShode');
+Route::get('/montashershode','NoteController@montashershode');
 //مشاهده تاریخچه یادداشتها
 Route::get('/history/{id}','NoteController@showNoteHistory');
+
 ######################<< سوژه ها >>############################################
 
 Route::resource('suzhe', 'SuzheController');
@@ -67,5 +69,12 @@ Route::resource('nazer','NazerController');
 Route::get('/nazer/create/{id}','NazerController@create');
 
 ######################<< رسانه ها >>############################
-
+//ذخیره یادداشت در رسانه ها
+Route::post('media/storeMediaForNote','MediaController@storeMediaForNote')->name('media.storeMediaForNote');
 Route::resource('media','MediaController');
+//یادداشتهای در انتظار انتشار در رسانه ها
+Route::get('waiting','MediaController@waiting');
+//ثبت لینک یادداشت در خبرگزاری
+Route::post('submiturl','MediaController@seturl')->name('media.submiturl');
+//مشاهده صفحه ثبت لینک یادداشت در رسانه ها در این حالت باید شناسه یادداشت و رسانه را داشته باشیم
+Route::get('sabt/{note_id}/{media_id}','MediaController@showsabt');

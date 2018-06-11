@@ -32,16 +32,18 @@
 
         </div>
 </div>
-
+@hasrole('modir')
 @if($note->status=='نهایی شده')
 {{--  اگر یادداشت نهایی شد مدیر میتواند آنرا بین رسانه ها توزیع کند  --}}
 <div class="panel panel-default">
     <div class="panel-heading">جهت انتشار این یادداشت در رسانه ها،رسانه مورد نظر خود را انتخاب نمایید.</div>
     <div class="panel-body">	
-        {!! Form::open(['class'=>'form-horizontal','route'=>'arzyabi.store']) !!}
+        {!! Form::open(['class'=>'form-horizontal','route'=>'media.storeMediaForNote']) !!}
         <section class="gallery-env">
             <div class="row">
-
+                
+                {!! Form::hidden('note_id', $note->id, []) !!}
+                
                 <div class="col-sm-12 gallery-right">
                     <!-- Album Images -->
                     <div class="album-images row ui-sortable">
@@ -50,7 +52,11 @@
                         <div class="col-md-3 col-sm-4 col-xs-6 ui-sortable-handle" style="position: relative; left: 0px; top: 0px;">
                             <div class="album-image">
                                 <a href="#" class="thumb" data-action="edit">
-                                    <img src="/uploads/resaneha/{{$media->id}}.jpg" class="img-responsive" width="150" height="150">
+                                    @if(file_exists(public_path().'/uploads/resaneha/'.$media->id.'.jpg'))
+                                    <img src="{{'/uploads/resaneha/'.$media->id.'.jpg'}}" class="img-circle" alt="{{$media->name}}" width="150" height="150">
+                                    @else
+                                    <img src="/uploads/resaneha/unknown.jpg" class="img-circle" alt="user-pic" width="150" height="150">
+                                    @endif
                                 </a>
         
                                 <a href="#" class="name">
@@ -59,21 +65,64 @@
                                 </a>
         
                                 <div class="image-options">
-                                    <a href="#" data-action="edit"><i class="fa-pencil"></i></a>
+                                    <a href="/media/{{$media->id}}/edit" data-action="edit"><i class="fa-pencil"></i></a>
                                     <a href="#" data-action="trash"><i class="fa-trash"></i></a>
                                 </div>
         
                                 <div class="image-checkbox">
-                                    <div class="cbr-replaced cbr-checked"><div class="cbr-input"><input type="checkbox" class="cbr cbr-done"></div><div class="cbr-state"><span></span></div></div>
+                                    <div class="">
+                                        <div class="cbr-input">
+                                            <input name="{{$media->id}}]" type="checkbox" class="cbr cbr-done" value="{{$media->id}}">
+                                        </div>
+                                        <div class="cbr-state">
+                                            <span></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                     </div>
         
+                {!! Form::submit('ارسال به رسانه ها', ['class'=>'form-control btn btn-success']) !!}
         
-                    
+
+                </div>
+            </div>
+        </section>
+       
+        </form>
+    </div>
+    <div class="panel-footer">سامانه ارزیابی یادداشتها</div>
+
+</div>
+@endif
+@endhasrole
+
+@hasrole('media')
+<div class="panel panel-default">
+    <div class="panel-heading">با ثبت لینک یادداشت در خبرگزاری ها ،امتیازی خود را افزایش دهید</div>
+    <div class="panel-body">	
+        {!! Form::open(['class'=>'form-horizontal','route'=>'media.submiturl']) !!}
+        <section class="gallery-env">
+            <div class="row">
+                
+                {!! Form::hidden('note_id', $note->id, []) !!}
+                {!! Form::hidden('media_id', $media->id, []) !!}
+                <div class="form-group-separator"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="field-5">لینک یادداشت در {{$media->name}}</label>
+
+                    <div class="col-sm-10">
+                        {!! Form::url('url', null, ['class'=>'form-control','required']) !!}
+
+                    </div>
+                </div>
+               
+
+                {!! Form::submit('ثبت لینک', ['class'=>'form-control btn btn-success']) !!}
         
+
                 </div>
             </div>
         </section>
@@ -85,9 +134,7 @@
 </div>
 
 
-
-
-@endif
+@endhasrole
 
 <script src="/assets/js/tinymce/tinymce.min.js"></script>
 <script>
@@ -105,8 +152,5 @@
     });
 </script>
 
-<!-- Imported scripts on this page -->
-<script src="/assets/js/jquery-ui/jquery-ui.min.js"></script>
-<script src="/assets/js/knob/jquery.knob.min.js"></script>
 
 @stop

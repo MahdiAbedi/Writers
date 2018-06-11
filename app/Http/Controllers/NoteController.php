@@ -351,12 +351,13 @@ class NoteController extends Controller
 
      } 
 
+     
     /**
      * یادداشتهای منتشر شده در رسانه ها
      */
-    public function montasherShode()
+    public function montashershode()
     {
-        $notes=Note::where('nazer_id',auth()->id())->get();   
+        $notes=Note::where('status','منتشر شده در رسانه ها')->get();   
         return view('pages.notes.index',compact('notes'));
     }
 

@@ -157,13 +157,23 @@
 					</li>
 					@endhasrole
 					<li>
-						<a href="/montasherShode">
+						<a href="/montashershode">
 							<i class="fa fa-chain"></i>
 							<span class="title">یادداشتها در رسانه ها</span>
 							<span class="label label-info scripts/">7</span>
 						</a>
 
 					</li>
+					@hasrole('media')
+					<li>
+						<a href="/waiting">
+							<i class="fa fa-chain"></i>
+							<span class="title">یادداشتهای در انتظار انتشار</span>
+							<span class="label label-info scripts/">7</span>
+						</a>
+
+					</li>
+					@endhasrole
 					@hasrole('media')
 					<li>
 						<a href="/users">

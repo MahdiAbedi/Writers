@@ -38,5 +38,15 @@ class Note extends Model
       // dd(User::role('ozve_halghe')->get()->pluck('name','id'));
     }
 
+    /**
+     * هر یادداشت میتواند به چندین رسانه ارسال شود
+     */
+
+    public function medias()
+    {
+        return $this->belongsToMany(Media::class,'notes_media');
+    }
+
+
 
 }//end of class
