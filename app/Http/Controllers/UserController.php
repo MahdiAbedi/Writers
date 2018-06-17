@@ -52,15 +52,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->except('roles','halghes','_token','photo'));
-        $this->getPhoto($request);
-        $roles = $request->input('roles') ? $request->input('roles') : [];
-        $halghes= $request->input('halghes') ? $request->input('halghes') : [];
-        
-        $user->halghe()->attach($halghes);
-        $user->assignRole($roles);
-
-        return redirect('users')->with('message','کاربر جدید ایجاد شد.');
+        try{
+            $user = User::create($request->except('roles','halghes','_token','photo'));
+            $this->getPhoto($request);
+            $roles = $request->input('roles') ? $request->input('roles') : [];
+            $halghes= $request->input('halghes') ? $request->input('halghes') : [];
+            
+            $user->halghe()->attach($halghes);
+            $user->assignRole($roles);
+    
+            return redirect('users')->with('message','کاربر جدید ایجاد شد.');
+        }
+        catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -82,21 +87,26 @@ class UserController extends Controller
     private function getPhoto(Request $request)
     {
         if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            $fileName = $request->code_melli.'.jpg';
-            $destination = base_path() . '/public/uploads/users-pic';
-
-            $photo->move($destination, $fileName);
-            
-            $imagePath = base_path() . '/public/uploads/users-pic/'.$fileName;
-            $image = Image::make($imagePath);
-
-            $image->resize(250, NULL, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $image->save();
-           // $data['photo'] = $fileName;
+            try{
+                $photo = $request->file('photo');
+                $fileName = $request->code_melli.'.jpg';
+                $destination =public_path() .'/uploads/users-pic';
+                //dd($destination);
+                $photo->move($destination, $fileName);
+                
+                $imagePath =public_path() .'/uploads/users-pic/'.$fileName;
+                $image = Image::make($imagePath);
+    
+                $image->resize(250, NULL, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+    
+                $image->save();
+               // $data['photo'] = $fileName;
+            }
+            catch (\Exception $e) {
+                return $e->getMessage();
+            }
 
         }
         return true;
@@ -174,7 +184,7 @@ class UserController extends Controller
     public function deletePhoto($photo)
     {
         if (!empty($photo)) {
-            $filepath = base_path() . '/public/uploads/users-pic/' . $photo.'.jpg';
+            $filepath = public_path() . '/uploads/users-pic/' . $photo.'.jpg';
 
             if (file_exists($filepath)) {
                 unlink($filepath);

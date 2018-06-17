@@ -33,7 +33,7 @@
                                                 <div class="col-md-10 col-sm-8">
                             
                                                     <div class="user-img">
-                                                        @if(file_exists(public_path().'/uploads/users-pic/'.auth()->user()->code_melli.'.jpg'))
+                                                        @if(file_exists('uploads/users-pic/'.auth()->user()->code_melli.'.jpg'))
                                                             <img src="{{'/uploads/users-pic/'.$user->code_melli.'.jpg'}}" class="img-circle" alt="{{auth()->user()->name}}" width="60" height="60">
                                                             @else
                                                             <img src="/assets/images/user-4.png" class="img-circle img-corona" alt="user-pic"  width="60" height="60" />

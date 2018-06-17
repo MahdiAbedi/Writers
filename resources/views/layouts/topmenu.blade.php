@@ -259,7 +259,7 @@
 
         <li class="dropdown user-profile">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                @if(file_exists(public_path().'/uploads/users-pic/'.auth()->user()->code_melli.'.jpg'))
+                @if(file_exists('uploads/users-pic/'.auth()->user()->code_melli.'.jpg'))
                     <img src="{{'/uploads/users-pic/'.auth()->user()->code_melli.'.jpg'}}" class="img-circle img-inline userpic-32" alt="{{auth()->user()->name}}" width="28" height="28">
                     @else
                     <img src="/assets/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />

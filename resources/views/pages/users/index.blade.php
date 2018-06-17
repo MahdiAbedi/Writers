@@ -60,7 +60,7 @@
                 <tr>
                     <td class="user-image hidden-xs hidden-sm">
                         <a href="#">
-                            @if(file_exists(public_path().'/uploads/users-pic/'.$user->code_melli.'.jpg'))
+                            @if(file_exists('uploads/users-pic/'.$user->code_melli.'.jpg'))
                             <img src="{{'/uploads/users-pic/'.$user->code_melli.'.jpg'}}" class="img-circle" alt="{{$user->name}}" width="40" height="40">
                             @else
                             <img src="/assets/images/user-1.png" class="img-circle" alt="user-pic">

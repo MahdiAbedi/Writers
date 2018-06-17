@@ -56,8 +56,14 @@
                     <td>{{$note->suzhe->halghe->name}}</td>
                     <td>{{$note->user->name}}</td>
                     <td>{{$note->status}}</td>
-                    <td>{{isset($note->nazer->name) ?$note->nazer->name :'نامشخص'}}</td>
+                    {{-- <td>{{isset($note->nazer->name) ?$note->nazer->name :'نامشخص'}}</td> --}}
+                   @hasrole('modir')
+                    <td>{{$note->nazer->name or 'نامشخص'}}</td>
                     <td>{{$note->arzyab->name}}</td>
+                    @else
+                    <td>---</td>
+                    <td>---</td>
+                    @endhasrole
                     <td class="btn btn-danger" id="timer">{{$note->updated_at}}</td>
                     <td>
                              @hasrole('writer')

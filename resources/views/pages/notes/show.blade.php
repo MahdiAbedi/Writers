@@ -100,6 +100,7 @@
 @endhasrole
 
 @hasrole('media')
+@if($note->status=='در صف انتشار رسانه ها')
 <div class="panel panel-default">
     <div class="panel-heading">با ثبت لینک یادداشت در خبرگزاری ها ،امتیازی خود را افزایش دهید</div>
     <div class="panel-body">	
@@ -133,7 +134,7 @@
 
 </div>
 
-
+@endif
 @endhasrole
 
 <script src="/assets/js/tinymce/tinymce.min.js"></script>

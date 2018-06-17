@@ -9,9 +9,8 @@
 				
 					<!-- Add your copyright text here -->
 					<div class="footer-text">
-						<p>&copy; 1404  
-						سیتم مدیریت محتوای <a title="ایلیاوب" href="http://www.ilyaweb.ir" target="_blank" rel="alternate">نارون</a> طراحی شده توسط شرکت<a title="ایلیاوب" href="http://www.ilyaweb.ir" target="_blank" rel="alternate"> نوآوران ارتباطات ایلیا</a></p>
-					</div>
+						<p>&copy; {{date("Y")}} سیتم مدیریت محتوای شبکه نویسندگان تحلیلگر(نسخه {{config('app.version')}})،طراحی شده توسط<a title="ایلیاوب" href="http://www.mahdiabedi.ir" target="_blank" rel="alternate noopener"> مهدی عابدی</a></p>
+						</div>
 					
 					
 					<!-- Go to Top Link, just add rel="go-top" to any link to add this functionality -->

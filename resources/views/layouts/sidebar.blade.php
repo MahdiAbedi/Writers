@@ -46,7 +46,7 @@
 					<div class="sidebar-user-info-inner">
 						<a href="/users/{{auth()->id()}}/edit" class="user-profile">
 								
-								@if(file_exists(public_path().'/uploads/users-pic/'.auth()->user()->code_melli.'.jpg'))
+								@if(file_exists('uploads/users-pic/'.auth()->user()->code_melli.'.jpg'))
 								<img src="{{'/uploads/users-pic/'.auth()->user()->code_melli.'.jpg'}}" class="img-circle" alt="{{auth()->user()->name}}" width="60" height="60">
 								@else
 								<img src="/assets/images/user-4.png" width="60" height="60" class="img-circle img-corona" alt="user-pic" />
