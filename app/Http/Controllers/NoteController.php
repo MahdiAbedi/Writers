@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Note;
 use App\User;
+use App\Media;
 use App\Suzhe;
+use App\Message;
 use Carbon\Carbon;
 use App\UserPoints;
 use App\Note_history;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Media;
+
 
 class NoteController extends Controller
 {
@@ -365,7 +367,7 @@ class NoteController extends Controller
      * اتفاقاتی که برای یادداشت می افتد در جدول تاریخچه ذخیره میشود
      * $id of note and $description of event
      */
-    public function addToNoteHistory($id,$description,$type)
+    public function addToNoteHistory($id,$description,$type=null)
     {
        $data['note_id']=$id;
        $data['description']=$description;
@@ -376,12 +378,15 @@ class NoteController extends Controller
     /**
      * ثبت امتیاز کاربر در هر فعالیت
      */
-    public function saveUserPoint($point,$description)
+    public function saveUserPoint($point,$description,$user_id=null)
     {
         try{
-            $data2['user_id']=auth()->id();
-            $data2['point']=-2;
-            $data2['description']='انتخاب سوژه بعد از گذشت 24 ساعت از ارسال آن';
+          
+            $user_id ? $user_id :auth()->id();
+           // $data2['user_id']=auth()->id();
+            $data2['user_id']=$user_id;
+            $data2['point']=$point;
+            $data2['description']=$description;
             $data2['created_at']=date(now());
             UserPoints::create($data2);
             User::where('id',auth()->id())->increment('point',$point);
@@ -399,6 +404,99 @@ class NoteController extends Controller
         $histories=Note_history::where('note_id',$id)->get();
         return view('pages.notes.history',compact('histories'));
     }
+
+    /**
+     * در این قسمت سیستم چک میکند که اگر یادداشتی در زمان مقرر انجام نشد چه اتفاقی براش بیفته
+     */
+
+     public function NoteCroneJob()
+     {
+         try
+         {
+            $notes=Note::where(function($query){
+                //اول چک میکنیم که منقضی شده باشه
+               $query->where('expire_date','<',now());
+               //بعد چک میکنیم که بایگانی یا رسانه ای نشده باشه
+               $query->whereNotIn('status',['منتشر شده در رسانه ها','بایگانی','مردود']);
+            })->get();
+            foreach ($notes as $note )
+             {
+                   //کاربری که باید جریمه باشد این کاربر میتواند یادداشت نویس،ناظر و ... باشد
+                   //$punished_user;
+   
+                   //تغییر وضعیت یادداشت
+                   if($note->status=='اعلام آمادگی'){
+                       //عدم تحویل نسخه اولیه
+                       $note->status='بایگانی';
+                       //ثبت در تاریخچه یادداشت
+                       $this->addToNoteHistory($note->id,'عدم تحویل نسخه اولیه');
+                       //کسر امتیاز از کاربر مربوطه:یادداشت نویس،ناظر،ارزیاب و ...
+                       $this->saveUserPoint(-3,'عدم تحویل نسخه اولیه یادداشت',$note->user_id);
+                      
+                       //ارسال پیام به مدیر سیستم
+                       $msg=$note->user->name . '.نسخه اولیه یادداشت خود را تحویل نداده است ';
+                       $this->sendToModir('عدم تحویل نسخه اولیه',$msg,0);
+   
+                       //ارسال پیام به خود کاربر
+                       $this->sendMessage('کسر امتیاز','بدلیل عدم ارسال نسخه اولیه یادداشت',0,$note->user_id);
+                       //بروز رسانی وضعیت یادداشت
+                       $note->update();
+                   }
+                   elseif($note->status=='ارزیابی محتوایی'){
+                       //عدم تحویل نسخه اولیه
+                       $note->status='تایید بدون ارزیابی';
+                       //ثبت در تاریخچه یادداشت
+                       $this->addToNoteHistory($note->id,'تایید بدون ارزیابی محتوایی');
+                       //کسر امتیاز از ناظر محتوایی یادداشت
+                       $this->saveUserPoint(-1,'عدم بررسی محتوایی یادداشت',$note->nazer_id);
+                      
+                       //ارسال پیام به مدیر سیستم
+                       $msg='یادداشت با عنوان';
+                       $msg.='{'.$note->title.'}';
+                       $msg.='بدون بررسی محتوایی به ارزیاب شکلی ارجاع شد.';
+                       $this->sendToModir('عدم بررسی محتوایی یادداشت',$msg,0);
+   
+                       //ارسال پیام به خود کاربر
+                       $this->sendMessage('کسر امتیاز','کسر امتیاز به دلیل عدم بررسی محتوایی یادداشت',0,$note->nazer_id);
+                       //بروز رسانی وضعیت یادداشت
+                       $note->update();
+                   }
+   
+                  
+                   echo $note->id . '---' .$note->title . '</br>';
+               
+            }//end foreach
+         }
+         catch(\Exception $e){
+            return $e->getMessage();
+         }
+         
+     }
+
+     /**
+      * ارسال پیام به کاربران
+      */
+      public function sendMessage($title,$body,$sender=0,$reciever)
+      {
+          Message::create([
+              'title'=>$title,
+              'body'=>$body,
+              'sender_id'=>$sender,
+              'reciever_id'=>$reciever
+          ]);
+      }
+
+      /**
+       * چون ممکنه چندتا مدیر داشته باشیم تابع ارسال به مدیران داریم
+       */
+
+       public function sendToModir($title,$body,$sender=0)
+       {
+           $users=User::role('modir')->get();
+           foreach ($users as $user) {
+                $this->sendMessage($title,$body,$sender=0,$user->id);
+           }
+       }
 
 }//end of class
 

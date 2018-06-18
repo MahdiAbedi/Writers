@@ -174,7 +174,7 @@
 
 					</li>
 					@endhasrole
-					@hasrole('media')
+					@hasrole('modir')
 					<li>
 						<a href="/users">
 							<i class="fa fa-users"></i>

@@ -17,11 +17,11 @@
 		</div>
 	
 			
-		@include('layouts.chat-sidebar')
+		{{--  @include('layouts.chat-sidebar')  --}}
 	
 	</div>
 	
-	@include('layouts.chat-bottom')
+	{{--  @include('layouts.chat-bottom')  --}}
 	
 	
 @include('layouts.bottom-scripts')

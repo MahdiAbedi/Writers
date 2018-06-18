@@ -51,6 +51,10 @@ Route::get('/montashershode','NoteController@montashershode');
 //مشاهده تاریخچه یادداشتها
 Route::get('/history/{id}','NoteController@showNoteHistory');
 
+//بررسی اتوماتیک وضعیت یادداشتها،اگر یادداشتی در زمان مقرر اقدام لازم بر رویش انجام
+//نشود این تابع وضعیت آنرا به صورت اتوماتیک مشخص میکند
+Route::get('notecrone','NoteController@NoteCroneJob');
+
 ######################<< سوژه ها >>############################################
 
 Route::resource('suzhe', 'SuzheController');
