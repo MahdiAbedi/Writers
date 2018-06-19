@@ -67,12 +67,13 @@
                     <td class="btn btn-danger" id="timer">{{$note->updated_at}}</td>
                     <td>
                              @hasrole('writer')
-                             @if(in_array($note->status,['اعلام آمادگی','تایید به شرط اصلاح']))
-                                <a href="/notes/{{$note->id}}/edit" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">
-                                    <i class="fa-edit"></i>
-                                    ویرایش
-                                </a>
-                            @endif
+                                @if(in_array($note->status,['اعلام آمادگی','تایید به شرط اصلاح']))
+                                    <a href="/notes/{{$note->id}}/edit" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">
+                                        <i class="fa-edit"></i>
+                                        ویرایش
+                                    </a>
+                                @endif
+                         
                             @endhasrole
                             @hasrole('ozve_halghe')
                             <a href="/nazer/create/{{$note->id}}" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">
@@ -80,12 +81,12 @@
                                 بررسی محتوایی
                             </a>
                             @endhasrole
-                            @hasrole('modir_halghe')
+                            {{--  @hasrole('modir_halghe')
                             <a href="/set-nazer/{{$note->id}}" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">
                                 <i class="fa-user"></i>
                                 تعیین ناظر
                             </a>
-                            @endhasrole
+                            @endhasrole  --}}
                             @hasrole('arzyab')
                             <a href="/arzyabi/{{$note->id}}" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">
                                 <i class="fa-thumbs-o-up"></i>
@@ -100,7 +101,11 @@
                             </a>
                             @endhasrole
 
-
+                            <a href="/notes/{{$note->id}}" class="btn btn-info btn-xs btn-icon icon-left pull-left" title="مشاهده">
+                                <i class="fa-eye"></i>
+                                مشاهده
+                            </a>
+                           
                             @hasrole('modir')
                             {!! Form::open(['method'=>'Delete','route'=>['notes.destroy',$note->id]]) !!}
             
@@ -110,10 +115,9 @@
                             </button>
                             @endhasrole
                             {!! Form::close() !!}
-                            <a href="/notes/{{$note->id}}" class="btn btn-info btn-xs btn-icon icon-left pull-left" title="مشاهده">
-                                <i class="fa-eye"></i>
-                                مشاهده
-                            </a>
+                            
+                            
+
                         </td>
                 </tr>
                 @empty

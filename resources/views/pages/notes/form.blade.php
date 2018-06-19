@@ -40,53 +40,7 @@
 
                     </div>
                 </div>
-
-                <div class="form-group-separator"></div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">ناظر محتوایی</label>
-
-                    <div class="col-sm-10">
-                        {!! Form::select('nazer_id',DB::table('user_role_halghe')->where(['role'=>'ozve_halghe','halghe_id'=>$note->suzhe->halghe->id])->pluck('user_name','user_id'),isset($note->nazer_id)?$note->nazer_id:null,
-                        ['class'=>'form-control']) !!}
-                    </div>
-                </div>
-                <div class="form-group-separator"></div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">ارزیاب</label>
-
-                    <div class="col-sm-10">
-                        {!! Form::select('nazer_id',App\User::role('arzyab')->pluck('name','id'),null, ['class'=>'form-control'])
-                        !!}
-                    </div>
-                </div>
-                <div class="form-group-separator"></div>
-
-               
-
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="field-5">مهلت</label>
-
-                    <div class="col-sm-10">
-
-                        {!! Form::datetime('expire_date', null, ['class'=>'form-control']) !!}
-
-                    </div>
-                </div>
-
-                <div class="form-group-separator"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="field-5">وضعیت یادداشت</label>
-
-                    <div class="col-sm-10">
-                        {!! Form::select('status',['اعلام آمادگی'=>'اعلام آمادگی','نوشتن'=>'نوشتن','ارزیابی محتوایی'=>'ارزیابی محتوایی' ,'مردود'=>'مردود','تایید'=>'تایید','تایید
-                        بدون ارزیابی'=>'تایید بدون ارزیابی','تایید به شرط اصلاح'=>'تایید به شرط اصلاح', 'در صف انتشار رسانه ها'=>'در صف انتشار رسانه ها','منتشر شده در رسانه ها'=>'منتشر شده در رسانه ها'], old('status'), ['class'=>'form-control'])
-                        !!}
-
-                    </div>
-                </div>
+                
                 <div class="form-group-separator"></div>
 
                 <div class="form-group">

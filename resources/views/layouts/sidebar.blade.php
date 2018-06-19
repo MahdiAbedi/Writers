@@ -101,7 +101,7 @@
 						<a href="/suzhe">
 							<i class="fa fa-bullhorn"></i>
 							<span class="title">سوژه ها</span>
-							<span class="label label-info scripts/">3</span>
+							<span class="label label-info scripts/">{{$suzhes_count}}</span>
 						</a>
 						
 					</li>
@@ -110,7 +110,7 @@
 							<a href="/notes">
 								<i class="fa fa-book"></i>
 								<span class="title">یادداشتها</span>
-								<span class="label label-info scripts/">7 یادداشت جدید</span>
+								<span class="label label-info scripts/">{{$note_started}}</span>
 							</a>
 						</li>
 					<li>
@@ -120,7 +120,7 @@
 						<a href="/barrasi">
 							<i class="fa fa-search-plus"></i>
 							<span class="title">بررسی محتوایی یادداشت</span>
-							<span class="label label-info scripts/">7</span>
+							<span class="label label-info scripts/">{{$nazer_count}}</span>
 						</a>
 
 					</li>
@@ -130,17 +130,17 @@
 						<a href="/arzyabi">
 							<i class="fa fa-thumbs-o-up"></i>
 							<span class="title">ارزیابی شکلی یادداشت</span>
-							<span class="label label-info scripts/">7</span>
+							<span class="label label-info scripts/">{{$arzyabi_count}}</span>
 						</a>
 
 					</li>
 					@endhasrole
-					@hasrole('modir_halghe')
+					@hasrole('modir_halghe|modir')
 					<li>
 						<a href="/set-nazer">
 							<i class="fa-hand-o-left"></i>
 							<span class="title">در انتظار تعیین ناظر محتوایی</span>
-							<span class="label label-info scripts/">7</span>
+							<span class="label label-info scripts/">{{$nazer_wating}}</span>
 						</a>
 
 					</li>
@@ -151,7 +151,7 @@
 						<a href="notes/final">
 							<i class="fa fa-send-o"></i>
 							<span class="title">یادداشتهای نهایی شده</span>
-							<span class="label label-info scripts/">7</span>
+							
 						</a>
 
 					</li>
@@ -160,7 +160,7 @@
 						<a href="/montashershode">
 							<i class="fa fa-chain"></i>
 							<span class="title">یادداشتها در رسانه ها</span>
-							<span class="label label-info scripts/">7</span>
+							
 						</a>
 
 					</li>
@@ -179,6 +179,7 @@
 						<a href="/users">
 							<i class="fa fa-users"></i>
 							<span class="title">کاربران</span>
+							<span class="label label-info scripts/">{{$user_count}}</span>
 						</a>
 					</li>
 				
@@ -205,7 +206,7 @@
 						<a href="mailbox-main.html">
 							<i class="linecons-mail"></i>
 							<span class="title">پیام ها</span>
-							<span class="label label-success scripts/">5 پیام جدید</span>
+							<span class="label label-success scripts/">{{$message_count}} پیام جدید</span>
 						</a>
 						<ul>
 							<li>

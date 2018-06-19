@@ -260,7 +260,7 @@
                                                         
                                                 <div class="col-sm-9">
                                                    
-                                                   {!! Form::text('birthdate', '1370/10/16', ['class'=>'form-control input-small','id'=>'datepicker6']) !!}
+                                                   {!! Form::text('birthdate', null, ['class'=>'form-control input-small','id'=>'datepicker6']) !!}
      
                                                 </div>
                                             </div>

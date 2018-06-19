@@ -32,7 +32,7 @@ Route::resource('notes', 'NoteController');
 //مشاهده یادداشتهای در انتظار تعیین ناظر محتوایی
 Route::get('/set-nazer','NoteController@withoutNazer');
 //انتخاب ناظر محتوایی توسط مدیر حلقه برای یادداشت
-Route::get('/set-nazer/{id}','NoteController@setNazer');
+//Route::get('/set-nazer/{id}','NoteController@setNazer');
 //ذخیره امتیاز ارزیابی برای هر یادداشت
 Route::post('/arzyabi/store','NoteController@savePoint')->name('arzyabi.store');
 //ارزیابی یادداشت

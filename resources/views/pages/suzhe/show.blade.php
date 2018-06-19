@@ -62,6 +62,17 @@
                                         
                                     </div>
                             </div>
+                            <div class="form-group-separator"></div>
+                            <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="field-1">زمان انقضای سوژه</label>
+            
+                                    <div class="col-sm-10">
+                                        
+                                            {!! Form::text('expire_date', null, ['class'=>'form-control input-small','id'=>'datepicker6']) !!}
+                                       
+                                        
+                                    </div>
+                            </div>
                             @endhasrole
                             {!! Form::hidden('status', 'منتشر شده', ['class'=>'form-control']) !!}
                             
@@ -104,5 +115,19 @@
 @endhasrole
     </div>
 </div>
+<!-- Imported scripts on this page -->
+                            <script src="/assets/js/datepicker/bootstrap-datepicker.js"></script>
+                            <script src="/assets/js/datepicker/bootstrap-datepicker.fa.js"></script>
+<link rel="stylesheet" href="/assets/js/datepicker/bootstrap-datepicker.css">
+<script>
+        $(document).ready(function() {
+            $("#datepicker6").datepicker({
+                isRTL: true,
+                dateFormat: "yy/mm/dd 23:59:59",
+                changeMonth: true,
+                changeYear: true
 
+            });
+        });
+    </script>
 @stop

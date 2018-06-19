@@ -268,13 +268,13 @@ class NoteController extends Controller
     }
 
     /**تعیین ناظر محتوایی از سوی مدیر حلقه  */
-    public function setNazer($id)
-    {
-        $note=Note::findOrFail($id);
-        #ثبت در تاریخچه یادداشت
-        $this->addToNoteHistory($note->id,'مدیر حلقه برای یادداشت ناظر محتوایی تعیین کرد','انتساب ناظر محتوایی');
-        return view('pages.notes.set_nazer',compact('note'));
-    }
+    // public function setNazer($id)
+    // {
+    //     $note=Note::findOrFail($id);
+    //     #ثبت در تاریخچه یادداشت
+    //     $this->addToNoteHistory($note->id,'مدیر حلقه برای یادداشت ناظر محتوایی تعیین کرد','انتساب ناظر محتوایی');
+    //     return view('pages.notes.set_nazer',compact('note'));
+    // }
 
     /**صفحه ارزیابی یادداشت */
     public function arzyabi($id)

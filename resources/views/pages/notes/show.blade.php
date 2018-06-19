@@ -26,9 +26,78 @@
                     <div class="ps-container ps-active-y" data-max-height="400" style="max-height: 400px;">
                         {!! Form::textarea(null, $note->body, ['class'=>'form-control autogrow tinymce','required','style'=>'overflow: hidden; word-wrap: break-word; resize: both;height: 80px;']) !!}
                         <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: -230px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 233px; height: 400px; right: 2px;"><div class="ps-scrollbar-y" style="top: 75px; height: 129px;"></div></div></div>
-                    
+                        <div class="form-group"></div>
+                        {!! Form::Model($note,array('class'=>'form-horizontal','route'=>['notes.update',$note->id],'method'=>'PATCH'))!!}
+
+                        @hasrole('modir_halghe')
+                        <div class="form-group-separator"></div>
+        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ناظر محتوایی</label>
+        
+                            <div class="col-sm-10">
+                                {!! Form::select('nazer_id',DB::table('user_role_halghe')->where(['role'=>'ozve_halghe','halghe_id'=>$note->suzhe->halghe->id])->pluck('user_name','user_id'),isset($note->nazer_id)?$note->nazer_id:null,
+                                ['class'=>'form-control']) !!}
+                            </div>
+                        </div>
+                        @endhasrole
+                        @hasrole('modir')
+                        <div class="form-group-separator"></div>
+        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ارزیاب</label>
+        
+                            <div class="col-sm-10">
+                                {!! Form::select('nazer_id',App\User::role('arzyab')->pluck('name','id'),null, ['class'=>'form-control'])
+                                !!}
+                            </div>
+                        </div>
+                        <div class="form-group-separator"></div>
+ 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="field-5">مهلت</label>
+        
+                            <div class="col-sm-10">
+        
+                                    {!! Form::text('expire_date', null, ['class'=>'form-control input-small','id'=>'datepicker6']) !!}
+        
+                            </div>
+                        </div>
+        
+                        <div class="form-group-separator"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="field-5">وضعیت یادداشت</label>
+        
+                            <div class="col-sm-10">
+                                {!! Form::select('status',['اعلام آمادگی'=>'اعلام آمادگی','نوشتن'=>'نوشتن','ارزیابی محتوایی'=>'ارزیابی محتوایی' ,'مردود'=>'مردود','تایید'=>'تایید','تایید
+                                بدون ارزیابی'=>'تایید بدون ارزیابی','تایید به شرط اصلاح'=>'تایید به شرط اصلاح', 'در صف انتشار رسانه ها'=>'در صف انتشار رسانه ها','منتشر شده در رسانه ها'=>'منتشر شده در رسانه ها'], old('status'), ['class'=>'form-control'])
+                                !!}
+        
+                            </div>
+                        </div>
+        
+                        @endhasrole
+                        <div class="form-group-separator"></div>
+        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="field-5"></label>
+        
+                            <div class="col-sm-10">
+                                {!! Form::submit(empty($note->id) ? 'ثبت یادداشت':'بروز رسانی یادداشت', ['class'=>'btn btn-success']) !!}
+        
+                            </div>
+                        </div>
+        
+                        <div class="form-group-separator"></div>
+                        
+                        {!! Form::close() !!}
                 </div>
+                {{--  انتهای پنل بادی  --}}
+                
+                
+                
             </div>
+            {{--  انتهای پنل  --}}
 
         </div>
 </div>
@@ -137,6 +206,7 @@
 @endif
 @endhasrole
 
+
 <script src="/assets/js/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
@@ -152,6 +222,18 @@
        
     });
 </script>
-
-
+<!-- Imported scripts on this page -->
+                            <script src="/assets/js/datepicker/bootstrap-datepicker.js"></script>
+                            <script src="/assets/js/datepicker/bootstrap-datepicker.fa.js"></script>
+<link rel="stylesheet" href="/assets/js/datepicker/bootstrap-datepicker.css">
+<script>
+        $(document).ready(function() {
+            $("#datepicker6").datepicker({
+                isRTL: true,
+                dateFormat: "yy/mm/dd 23:59:59",
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
 @stop

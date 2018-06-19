@@ -24,7 +24,7 @@ class SuzheController extends Controller
     {
         $suzhes=Suzhe::where(function($query) 
             {
-                $data=[];
+                $data=array();
                 /**
                  * اگر کاربر مدیر یا عضو ستاد شبکه نبود فقط بتواند سوژه های حلقه خود را ببیند
                  */
@@ -34,7 +34,9 @@ class SuzheController extends Controller
                     foreach($halghes as $halghe)
                     { 
                         $data[]=$halghe->id;  
+                        
                     }
+                   // dd($data);
                     //بغییر از مدیر و ستاد شبکه بقیه فقط سوژه های تایید شده را مشاهده میکنند
                     $query->where('status','منتشر شده');
                     //فقط سوژه هایی که ظرفیت خالی دارند به کاربران نمایش داده میشود

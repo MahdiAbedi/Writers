@@ -37,10 +37,11 @@ use Carbon\Carbon;
                                 </span>
                 
                                 <span class="line desc small">
-                                    {{$message->body}}
+                                    {{$message->title}}
                                 </span>
                             </a>
                         </li>
+                       
                 @endforeach
                     </ul>
                 
