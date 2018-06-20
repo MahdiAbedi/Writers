@@ -203,36 +203,11 @@
 							</ul>
 					</li>
 					@endhasrole
-						<a href="mailbox-main.html">
+						<a href="/message">
 							<i class="linecons-mail"></i>
 							<span class="title">پیام ها</span>
 							<span class="label label-success scripts/">{{$message_count}} پیام جدید</span>
 						</a>
-						<ul>
-							<li>
-								<a href="mailbox-main.html">
-									<span class="title">پیام های دریافتی</span>
-									<span class="label label-info scripts/ pull-left">5 پیام جدید</span>
-								</a>
-							</li>
-							<li>
-								<a href="mailbox-compose.html">
-									<span class="title">پیام های ارسال شده</span>
-									
-								</a>
-							</li>
-							<li>
-								<a href="mailbox-message.html">
-									<span class="title">پیام های سامانه برای شما</span>
-									<span class="label label-warning scripts/ pull-left">5 پیام جدید</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					
-					
-					
-
 				</ul>
 				
 			</div>

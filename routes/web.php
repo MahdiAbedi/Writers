@@ -82,3 +82,7 @@ Route::get('waiting','MediaController@waiting');
 Route::post('submiturl','MediaController@seturl')->name('media.submiturl');
 //مشاهده صفحه ثبت لینک یادداشت در رسانه ها در این حالت باید شناسه یادداشت و رسانه را داشته باشیم
 Route::get('sabt/{note_id}/{media_id}','MediaController@showsabt');
+
+
+######################<< پیام ها >>############################
+Route::resource('message','MessageController');

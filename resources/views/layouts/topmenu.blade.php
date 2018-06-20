@@ -30,7 +30,7 @@ use Carbon\Carbon;
                             
                 @foreach($messages as $message)
                         <li class="active"><!-- "active" class means message is unread -->
-                            <a href="#">
+                            <a href="/message/{{$message->id}}">
                                 <span class="line">
                                     <strong>{{$message->getUserName->name}}</strong>
                                     <span class="light small">  {{$message->created_at->diffForHumans()}}</span>
@@ -48,7 +48,7 @@ use Carbon\Carbon;
                 </li>
                 
                 <li class="external">
-                    <a href="mailbox-main.html">
+                    <a href="/message">
                         <span>مشاهده تمام پیام ها</span>
                         <i class="fa-link-ext"></i>
                     </a>
@@ -74,7 +74,7 @@ use Carbon\Carbon;
                     <ul class="dropdown-menu-list list-unstyled ps-scrollbar">
                         @foreach($sysMsges as $sysMsg)
                         <li class="active notification-success">
-                            <a href="#">
+                                <a href="/message/{{$message->id}}">
                                 <i class="fa-user"></i>
                                 
                                 <span class="line small time">
@@ -94,7 +94,7 @@ use Carbon\Carbon;
                 </li>
                 
                 <li class="external">
-                    <a href="#">
+                    <a href="/message">
                         <span>نمایش تمام اعلان ها</span>
                         <i class="fa-link-ext"></i>
                     </a>

@@ -75,3 +75,12 @@ th {
 .page-body .main-content .cbp_tmtimeline>li .cbp_tmlabel.empty{text-align: left;}
 
 /*پایان تاریخچه*/
+
+/*پیام ها*/
+.mailbox-env .mail-single .mail-single-header .mail-single-header-options,.mailbox-env .mail-single .mail-single-info .mail-single-info-options {
+  float: left;
+}
+.mailbox-env .mail-single .mail-single-header>h2,.mailbox-env .mail-single .mail-single-info .mail-single-info-user{float: right;}
+
+.mailbox-env .mail-compose .form-group label{right:0;}
+.mailbox-env .mail-compose .form-group .field-options{left:0;}

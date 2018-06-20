@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Message;
 
 class MessageController extends Controller
 {
@@ -13,7 +14,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $messages=Message::where('reciever_id',auth()->id())->orderBy('id','desc')->paginate(20);
+        return view('pages.message.inbox',compact('messages'));
     }
 
     /**
@@ -23,7 +25,7 @@ class MessageController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.message.form');
     }
 
     /**
@@ -45,7 +47,8 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        //
+        $message=Message::find($id);
+        return view('pages.message.show',compact('message'));
     }
 
     /**
