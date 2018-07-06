@@ -65,7 +65,8 @@ Route::get('/suzhe/{id}/reject','SuzheController@reject');
 Route::resource('users','UserController');
 //مشاهده تاریخچه امتیازات کاربر
 Route::get('user/history/{id}','UserController@showHistory');
-
+//صورت حساب هر کاربر
+Route::get('/invoice/{id}','UserController@invoice');
 
 ######################<< بررسی توسط ناظر محتوایی >>############################
 

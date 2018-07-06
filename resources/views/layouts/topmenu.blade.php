@@ -74,7 +74,7 @@ use Carbon\Carbon;
                     <ul class="dropdown-menu-list list-unstyled ps-scrollbar">
                         @foreach($sysMsges as $sysMsg)
                         <li class="active notification-success">
-                                <a href="/message/{{$message->id}}">
+                                <a href="/message/{{$sysMsg->id}}">
                                 <i class="fa-user"></i>
                                 
                                 <span class="line small time">

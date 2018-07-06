@@ -135,6 +135,36 @@
                                                         {!! Form::text('postal_code', null, ['class'=>'form-control']) !!}
                                                 </div>
                                             </div>
+
+                                            {{-- اطلاعات حساب --}}
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label class="control-label" for="name">نام بانک</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                        {!! Form::text('bank_name', null, ['class'=>'form-control']) !!}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label class="control-label" for="name">شماره حساب</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                        {!! Form::text('bank_account', null, ['class'=>'form-control']) !!}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label class="control-label" for="name">شماره عابر بانک</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                        {!! Form::text('bank_cart', null, ['class'=>'form-control']) !!}
+                                                </div>
+                                            </div>
+
+
+
+                                            {{-- پایان اطلاعات حساب --}}
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <label class="control-label" for="name">تلفن همراه*</label>
@@ -332,8 +362,7 @@
                             <link rel="stylesheet" href="/assets/js/select2/select2.css">
                             <link rel="stylesheet" href="/assets/js/select2/select2-bootstrap.css">
                             <link rel="stylesheet" href="/assets/js/multiselect/css/multi-select.css">
-                            <link rel="stylesheet" href="/assets/js/datepicker/bootstrap-datepicker.css">
-                            
+
                             <!-- Imported scripts on this page -->
                             <script src="/assets/js/datepicker/bootstrap-datepicker.js"></script>
                             <script src="/assets/js/datepicker/bootstrap-datepicker.fa.js"></script>

@@ -84,6 +84,11 @@
                                 ویرایش
                             </a>
 
+                            <a href="/invoice/{{$user->id}}" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">
+                                <i class="fa-edit"></i>
+                               صورت حساب
+                            </a>
+
                             {!! Form::open(['method'=>'Delete','route'=>['users.destroy',$user->id]]) !!}
             
                             <button type="submit" onclick="return confirm('شما در حال حذف کاربر هستید؟')" class="pull-right btn  btn-danger btn-icon icon-left btn-xs" title="حذف کاربر">

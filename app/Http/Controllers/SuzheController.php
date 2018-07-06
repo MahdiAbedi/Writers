@@ -43,7 +43,7 @@ class SuzheController extends Controller
                    //i used whereRaw() to compare two fields
                     $query->whereRaw('user_limit > choosed_users');
                     //یادداشت نویس قبل از انقضای سوژه میتواند آنرا انتخاب کند
-                    $query->whereRaw('expire_date >date(now())');
+                   // $query->whereRaw('expire_date > date(now())');
                     //کاربران فقط سوژه های حلقه خود را مشاهده میکنند
                     $query->whereIn('halghe_id', $data);
                     return $query;
@@ -150,9 +150,11 @@ class SuzheController extends Controller
      * @param  \App\Suzheh  $suzheh
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Suzhe $suzheh)
+    public function destroy(Suzhe $suzhe)
     {
-        //
+        $suzheh=Suzhe::find($suzhe->id);
+        $suzheh->delete();
+        return redirect('suzhe')->with('message', 'سوژه با موفقیت حذف شد.');
     }
     
 }

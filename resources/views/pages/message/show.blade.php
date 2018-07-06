@@ -24,7 +24,7 @@ use Carbon\Carbon
                         </h2>
     
                         <div class="mail-single-header-options">
-                            <a href="message/create" class="btn btn-gray btn-icon">
+                            <a href="/message/create" class="btn btn-gray btn-icon">
                                 <span>پاسخ</span>
                                 <i class="fa-reply-all"></i>
                             </a>

@@ -38,8 +38,8 @@
                     @foreach($zaribs as $zarib)
                     <h5>{{$zarib->title}}</h5>
                     <div class="col col-sm-6">
-                        <div class="slider slider-success" data-min="0" data-max="20" data-value="10" data-fill="#{{$zarib->name}}"></div>
-                        <input type="hidden" value="10" name="zaribs[{{$zarib->name}}][{{$zarib->zarib}}]" id="{{$zarib->name}}" required type="number" width="auto" min="0" max="20" class="form-control" placeholder="{{$zarib->title}}">
+                        <div class="slider slider-success" data-min="10" data-max="20" data-value="15" data-fill="#{{$zarib->name}}"></div>
+                        <input type="hidden" value="15" name="zaribs[{{$zarib->name}}][{{$zarib->zarib}}]" id="{{$zarib->name}}" required type="number" width="auto" min="0" max="20" class="form-control" placeholder="{{$zarib->title}}">
                     </div>
                  @endforeach   
             </div>

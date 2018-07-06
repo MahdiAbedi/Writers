@@ -36,7 +36,7 @@
                     <label class="col-sm-2 control-label" for="field-5">متن یادداشت*</label>
 
                     <div class="col-sm-10">
-                            {!! Form::textarea('body', null, ['class'=>'form-control autogrow tinymce','required','style'=>'overflow: hidden; word-wrap: break-word; resize: both;height: 80px;']) !!}
+                            {!! Form::textarea('body', null, ['class'=>'form-control autogrow tinymce','style'=>'overflow: hidden; word-wrap: break-word; resize: both;height: 80px;']) !!}
 
                     </div>
                 </div>

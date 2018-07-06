@@ -38,10 +38,10 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 //برای بارگزاری روی سرور باید مسیر پوشه p
-//public folder must change to public_html only on server
-// $app->bind('path.public', function() {
-//     return base_path().'/public_html';
-//   });
+// public folder must change to public_html only on server
+$app->bind('path.public', function() {
+    return base_path().'/public_html';
+  });
 
 
 /*

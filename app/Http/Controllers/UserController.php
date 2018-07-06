@@ -2,9 +2,10 @@
 namespace App\Http\Controllers;
 
 
-use App\User;
 use Image; 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -202,4 +203,14 @@ class UserController extends Controller
      {
          echo 'user points';
      }
+
+     /**
+      * صورت حساب پرداخت نشده هر کاربر
+      */
+
+      public function invoice($id){
+          $user=User::find($id);
+          $invoices=DB::table('user_points')->where(['user_id'=>$user->id,'payed'=>'پرداخت نشده'])->get();
+          return view('pages.users.invoice',compact('invoices','user'));
+      }
 }//end of class
