@@ -59,7 +59,7 @@
                         </a>
                     </td>
                     <td>{{$media->name}}</td>
-                    <td>{{$media->user->name}}</td>
+                    <td>{{$media->user->name or 'حذف شده'}}</td>
                    
                     <td> 
                         <a href="/media/{{$media->id}}/edit" class="btn btn-secondary btn-xs btn-icon icon-left pull-left" title="ویرایش">

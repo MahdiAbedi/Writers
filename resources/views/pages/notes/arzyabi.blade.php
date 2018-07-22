@@ -5,6 +5,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{$note->title}}</h3>
+                    <div class="col-sm-2">
+                        <a class="btn btn-info" href="/uploads/notes/{{$note->id}}.docx">دانلود فایل یادداشت</a>
+                    </div>
                     <div class="panel-options">
                         <a href="#" data-toggle="panel">
                             <span class="collapse-icon">–</span>

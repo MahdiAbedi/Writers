@@ -18,14 +18,14 @@
 	
 			
 		{{--  @include('layouts.chat-sidebar')  --}}
-	
+
 	</div>
 	
 	{{--  @include('layouts.chat-bottom')  --}}
 	
 	
 @include('layouts.bottom-scripts')
-
-
+	
+	
 </body>
 </html>

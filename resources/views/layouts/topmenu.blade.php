@@ -123,34 +123,26 @@ use Carbon\Carbon;
             </a>
 
             <ul class="dropdown-menu user-profile-menu list-unstyled">
+               
+                
                 <li>
-                    <a href="#edit-profile">
-                        <i class="fa-edit"></i>
-                        New Post
-                    </a>
-                </li>
-                <li>
-                    <a href="#settings">
-                        <i class="fa-wrench"></i>
-                        Settings
-                    </a>
-                </li>
-                <li>
-                    <a href="#profile">
+                    <a href="/users/{{auth()->id()}}/edit">
                         <i class="fa-user"></i>
-                        Profile
+                        پروفایل
                     </a>
                 </li>
                 <li>
-                    <a href="#help">
+                    <a href="/message">
                         <i class="fa-info"></i>
-                        Help
+                        مرکز پیام
                     </a>
                 </li>
                 <li class="last">
-                    <a href="extra-lockscreen.html">
+                    <a href="{{ route('logout') }}"
+								onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
                         <i class="fa-lock"></i>
-                        Logout
+                        خروج
                     </a>
                 </li>
             </ul>

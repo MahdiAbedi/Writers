@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Image; 
 use App\User;
+use App\UserPoints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -79,41 +80,7 @@ class UserController extends Controller
     {
         //
     }
-
-
-    /**
-     * بارگزاری تصویر پروفایل کاربر
-     */
-
-    private function getPhoto(Request $request)
-    {
-        if ($request->hasFile('photo')) {
-            try{
-                $photo = $request->file('photo');
-                $fileName = $request->code_melli.'.jpg';
-                $destination =public_path() .'/uploads/users-pic';
-                //dd($destination);
-                $photo->move($destination, $fileName);
-                
-                $imagePath =public_path() .'/uploads/users-pic/'.$fileName;
-                $image = Image::make($imagePath);
-    
-                $image->resize(250, NULL, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-    
-                $image->save();
-               // $data['photo'] = $fileName;
-            }
-            catch (\Exception $e) {
-                return $e->getMessage();
-            }
-
-        }
-        return true;
-    }
-    
-     
+ 
     /**
      * Show the form for editing the specified resource.
      *
@@ -178,6 +145,39 @@ class UserController extends Controller
         return redirect('users')->with('message', 'خطایی در هنگام حذف کاربر رخ داده است.');
     }
 
+      /**
+     * بارگزاری تصویر پروفایل کاربر
+     */
+
+    private function getPhoto(Request $request)
+    {
+        if ($request->hasFile('photo')) {
+            try{
+                $photo = $request->file('photo');
+                $fileName = $request->code_melli.'.jpg';
+                $destination =public_path() .'/uploads/users-pic';
+                //dd($destination);
+                $photo->move($destination, $fileName);
+                
+                $imagePath =public_path() .'/uploads/users-pic/'.$fileName;
+                $image = Image::make($imagePath);
+    
+                $image->resize(250, NULL, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+    
+                $image->save();
+               // $data['photo'] = $fileName;
+            }
+            catch (\Exception $e) {
+                return $e->getMessage();
+            }
+
+        }
+        return true;
+    }
+
+    
 /** 
  * Deleting user profile picture when we delete the user
  */
@@ -201,7 +201,8 @@ class UserController extends Controller
 
      public function showHistory($user_id)
      {
-         echo 'user points';
+         $histories=UserPoints::where('user_id',$user_id)->get();
+         return view('pages.users.history',compact('histories'));
      }
 
      /**

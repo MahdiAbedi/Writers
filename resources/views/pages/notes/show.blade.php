@@ -23,11 +23,20 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="ps-container ps-active-y" data-max-height="400" style="max-height: 400px;">
+                
+                    <!-- <div class="ps-container ps-active-y" data-max-height="400" style="max-height: 400px;">
                         {!! Form::textarea(null, $note->body, ['class'=>'form-control autogrow tinymce','required','style'=>'overflow: hidden; word-wrap: break-word; resize: both;height: 80px;']) !!}
                         <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: -230px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 233px; height: 400px; right: 2px;"><div class="ps-scrollbar-y" style="top: 75px; height: 129px;"></div></div></div>
+                        <div class="form-group-separator"></div>
+                
+                    </div>   -->
+
+                        
+
                         <div class="form-group"></div>
-                        {!! Form::Model($note,array('class'=>'form-horizontal','route'=>['notes.update',$note->id],'method'=>'PATCH'))!!}
+                        
+                        <div class="form-group-separator"></div>
+                        {!! Form::Model($note,array('class'=>'form-horizontal','route'=>['notes.update',$note->id],'method'=>'PATCH','files'=>true))!!}
 
                         @hasrole('modir_halghe')
                         <div class="form-group-separator"></div>
@@ -36,7 +45,7 @@
                             <label class="col-sm-2 control-label">ناظر محتوایی</label>
         
                             <div class="col-sm-10">
-                                {!! Form::select('nazer_id',DB::table('user_role_halghe')->where(['role'=>'ozve_halghe','halghe_id'=>$note->suzhe->halghe->id])->pluck('user_name','user_id'),isset($note->nazer_id)?$note->nazer_id:null,
+                                {!! Form::select('nazer_id',DB::table('user_role_halghe')->where(['role'=>'ozve_halghe','halghe_id'=>$note->suzhe->halghe->id])->pluck('user_name','user_id'),null,
                                 ['class'=>'form-control']) !!}
                             </div>
                         </div>
@@ -48,7 +57,7 @@
                             <label class="col-sm-2 control-label">ارزیاب</label>
         
                             <div class="col-sm-10">
-                                {!! Form::select('nazer_id',App\User::role('arzyab')->pluck('name','id'),null, ['class'=>'form-control'])
+                                {!! Form::select('arzyab_id',App\User::role('arzyab')->pluck('name','id'),null, ['class'=>'form-control'])
                                 !!}
                             </div>
                         </div>
@@ -69,22 +78,63 @@
                             <label class="col-sm-2 control-label" for="field-5">وضعیت یادداشت</label>
         
                             <div class="col-sm-10">
-                                {!! Form::select('status',['اعلام آمادگی'=>'اعلام آمادگی','نوشتن'=>'نوشتن','ارزیابی محتوایی'=>'ارزیابی محتوایی' ,'مردود'=>'مردود','تایید'=>'تایید','تایید
-                                بدون ارزیابی'=>'تایید بدون ارزیابی','تایید به شرط اصلاح'=>'تایید به شرط اصلاح', 'در صف انتشار رسانه ها'=>'در صف انتشار رسانه ها','منتشر شده در رسانه ها'=>'منتشر شده در رسانه ها'], old('status'), ['class'=>'form-control'])
+                                {!! Form::select('status',[
+                                'اعلام آمادگی'=>'اعلام آمادگی','نوشتن'=>'نوشتن'
+                                ,'ارزیابی محتوایی'=>'ارزیابی محتوایی' 
+                                ,'مردود'=>'مردود'
+                                ,'نهایی شده'=>'نهایی شده'
+                                ,'تایید بدون ارزیابی'=>'تایید بدون ارزیابی'
+                                ,'تایید به شرط اصلاح'=>'تایید به شرط اصلاح'
+                                , 'در صف انتشار رسانه ها'=>'در صف انتشار رسانه ها'
+                                ,'منتشر شده در رسانه ها'=>'منتشر شده در رسانه ها'
+                                ,'ارزیابی شکلی'=>'ارزیابی شکلی']
+                                , null, ['class'=>'form-control'])
                                 !!}
         
                             </div>
                         </div>
         
                         @endhasrole
+
+                        @hasrole('ozve_halghe')
+                        <div class="form-group-separator"></div>
+                        <div class="row">
+                            <label class="col-sm-2 control-label" for="field-5">فایل اصلاحات</label>
+                            <div class="col-sm-10">
+                                {!! Form::file('docs', ['class'=>'form-control']) !!}       
+
+                            </div>
+                        </div>
+                        <div class="form-group-separator"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="field-5">ارزیابی یادداشت</label>
+        
+                            <div class="col-sm-10">
+                                {!! Form::select('status',[
+                                'مردود'=>'مردود'
+                                ,'ارزیابی شکلی'=>'تایید'
+                                ,'تایید به شرط اصلاح'=>'تایید به شرط اصلاح'],
+                                 
+                                 null, 
+                                 ['class'=>'form-control']
+                                 )
+                                !!}
+        
+                            </div>
+                        </div>
+
+                        @endhasrole
                         <div class="form-group-separator"></div>
         
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="field-5"></label>
         
-                            <div class="col-sm-10">
+                            <div class="col-sm-2">
                                 {!! Form::submit(empty($note->id) ? 'ثبت یادداشت':'بروز رسانی یادداشت', ['class'=>'btn btn-success']) !!}
         
+                            </div>
+                            <div class="col-sm-2">
+                               <a class="btn btn-info" href="/uploads/notes/{{$note->id}}.docx">دانلود فایل یادداشت</a>
                             </div>
                         </div>
         
@@ -169,42 +219,88 @@
 @endhasrole
 
 @hasrole('media')
-@if($note->status=='در صف انتشار رسانه ها')
-<div class="panel panel-default">
-    <div class="panel-heading">با ثبت لینک یادداشت در خبرگزاری ها ،امتیازی خود را افزایش دهید</div>
-    <div class="panel-body">	
-        {!! Form::open(['class'=>'form-horizontal','route'=>'media.submiturl']) !!}
-        <section class="gallery-env">
-            <div class="row">
-                
-                {!! Form::hidden('note_id', $note->id, []) !!}
-                {!! Form::hidden('media_id', $media->id, []) !!}
-                <div class="form-group-separator"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="field-5">لینک یادداشت در {{$media->name}}</label>
+    @if($note->status=='در صف انتشار رسانه ها')
+    <div class="panel panel-default">
+        <div class="panel-heading">با ثبت لینک یادداشت در خبرگزاری ها ،امتیازی خود را افزایش دهید</div>
+        <div class="panel-body">	
+            {!! Form::open(['class'=>'form-horizontal','route'=>'media.submiturl']) !!}
+            <section class="gallery-env">
+                <div class="row">
+                    
+                    {!! Form::hidden('note_id', $note->id, []) !!}
+                    {!! Form::hidden('media_id', $media->id, []) !!}
+                    <div class="form-group-separator"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="field-5">لینک یادداشت در {{$media->name}}</label>
 
-                    <div class="col-sm-10">
-                        {!! Form::url('url', null, ['class'=>'form-control','required']) !!}
+                        <div class="col-sm-10">
+                            {!! Form::url('url', null, ['class'=>'form-control','required']) !!}
+
+                        </div>
+                    </div>
+                
+
+                    {!! Form::submit('ثبت لینک', ['class'=>'form-control btn btn-success']) !!}
+            
 
                     </div>
                 </div>
-               
-
-                {!! Form::submit('ثبت لینک', ['class'=>'form-control btn btn-success']) !!}
+            </section>
         
+            </form>
+        </div>
+        <div class="panel-footer">سامانه ارزیابی یادداشتها</div>
 
+    </div>
+
+    @endif
+@endhasrole
+
+
+<!-- نمایش لینک یادداشت در رسانه ها -->
+@if($note->status=='منتشر شده در رسانه ها')
+<div class="panel panel-default">
+    <div class="panel-heading">این یادداشت در رسانه های زیر منتشر شده است.</div>
+    <div class="panel-body">	
+        <section class="gallery-env">
+            <div class="row">
+                <div class="col-sm-12 gallery-right">
+                    <!-- Album Images -->
+                    <div class="album-images row ui-sortable">
+                    <?php
+                       $medias= DB::table('notes_media')->where('note_id',$note->id)->get();
+                       //dd($medias);
+                    ?>
+                    @foreach($medias as $media)
+                        <!-- Album Image -->
+                        <div class="col-md-3 col-sm-4 col-xs-6 ui-sortable-handle" style="position: relative; left: 0px; top: 0px;">
+                            <div class="album-image">
+                                <a href="{{$media->url}}" class="thumb" data-action="edit">
+                                    @if(file_exists(public_path().'/uploads/resaneha/'.$media->media_id.'.jpg'))
+                                    <img src="{{'/uploads/resaneha/'.$media->media_id.'.jpg'}}" class="img-circle" width="150" height="150">
+                                    @else
+                                    <img src="/uploads/resaneha/unknown.jpg" class="img-circle" alt="user-pic" width="150" height="150">
+                                    @endif
+                                </a>
+
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+   
                 </div>
             </div>
         </section>
        
         </form>
     </div>
-    <div class="panel-footer">سامانه ارزیابی یادداشتها</div>
+    
 
 </div>
-
 @endif
-@endhasrole
+
+
+
 
 
 <script src="/assets/js/tinymce/tinymce.min.js"></script>
@@ -223,8 +319,8 @@
     });
 </script>
 <!-- Imported scripts on this page -->
-                            <script src="/assets/js/datepicker/bootstrap-datepicker.js"></script>
-                            <script src="/assets/js/datepicker/bootstrap-datepicker.fa.js"></script>
+<script src="/assets/js/datepicker/bootstrap-datepicker.js"></script>
+<script src="/assets/js/datepicker/bootstrap-datepicker.fa.js"></script>
 <link rel="stylesheet" href="/assets/js/datepicker/bootstrap-datepicker.css">
 <script>
         $(document).ready(function() {

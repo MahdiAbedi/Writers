@@ -18,8 +18,8 @@
             </div>
             <div class="panel-body">
 
-                @if(isset($note->id)) {!! Form::Model($note,array('class'=>'form-horizontal','route'=>['notes.update',$note->id],'method'=>'PATCH'))!!}
-                @else {!! Form::open(['class'=>'form-horizontal','route'=>'notes.store']) !!} @endif
+                @if(isset($note->id)) {!! Form::Model($note,array('class'=>'form-horizontal','route'=>['notes.update',$note->id],'method'=>'PATCH','files'=>true))!!}
+                @else {!! Form::open(['class'=>'form-horizontal','route'=>'notes.store','files'=>true]) !!} @endif
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="field-1">عنوان یادداشت*</label>
@@ -33,12 +33,20 @@
                 <div class="form-group-separator"></div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="field-5">متن یادداشت*</label>
+                    <label class="col-sm-2 control-label" for="field-5">توضیحات یادداشت*</label>
 
                     <div class="col-sm-10">
                             {!! Form::textarea('body', null, ['class'=>'form-control autogrow tinymce','style'=>'overflow: hidden; word-wrap: break-word; resize: both;height: 80px;']) !!}
 
                     </div>
+                </div>
+                <div class="form-group-separator"></div>
+                <div class="row">
+                <label class="col-sm-2 control-label" for="field-5">فایل یادداشت*</label>
+                <div class="col-sm-10">
+                    {!! Form::file('docs', ['class'=>'form-control']) !!}       
+
+                </div>
                 </div>
                 
                 <div class="form-group-separator"></div>

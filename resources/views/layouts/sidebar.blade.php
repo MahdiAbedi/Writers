@@ -148,7 +148,7 @@
 
 					@hasrole('modir')
 					<li>
-						<a href="notes/final">
+						<a href="/notes/final">
 							<i class="fa fa-send-o"></i>
 							<span class="title">یادداشتهای نهایی شده</span>
 							

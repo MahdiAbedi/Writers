@@ -202,12 +202,89 @@ class NoteController extends Controller
         //     return redirect('notes')->with('message','اقدام شما به عنوان یک هشدار امنتیتی در سامانه ثبت شد.');
         // }
 
-        $data=$request->all();
+        //$data=$request->all();
+        $data=$request->except('docs');
        
+        #########################################ارسال پیام متناسب با وضعیت یادداشت #################################
+
+        switch ($request->status) {
+
+            case 'ارزیابی محتوایی':
+            $this->addToNoteHistory($note->id,'نسخه اولیه توسط یادداشت نویس ارسال شد.','ارسال نسخه اولیه');
+            $this->sendMessage('یادداشت جدید','یک یادداشت جدید برای بررسی محتوایی دارید',0,$note->nazer_id);
+
+                break;
+
+            case 'مردود':
+            $this->addToNoteHistory($note->id,'یادداشت مردود اعلام شد.','یادداشت مردود');
+            $this->sendMessage('یادداشت شما مردود اعلام شد','یادداشت شما مردود اعلام شد.',0,$note->user_id);
+
+                break;
+
+            case 'تایید شده':
+            $this->addToNoteHistory($note->id,'یادداشت از نظر محتوایی تایید شد','تایید یادداشت');
+            $this->sendMessage('تایید یادداشت','یادداشت شما تایید شد',0,$note->user_id);
+
+                break;
+
+            case 'تایید به شرط اصلاح':
+            $this->addToNoteHistory($note->id,'یادداشت جهت اصلاح به یادداشت نویس ارجاع شد.','تایید به شرط اصلاح');
+            $this->sendMessage('ارجاع یادداشت شما','یادداشت شما از نظر محتوایی نیازمند تغییراتی است.',0,$note->user_id);
+
+                break;
+
+            case 'تایید بدون ارزیابی':
+            $this->addToNoteHistory($note->id,'یادداشت بدون ارزیابی و بصورت خودکار تایید شد','تایید بدون ارزیابی');
+            $this->sendMessage('تایید یادداشت','یادداشت شما بدون بررسی محتوایی تایید شد',0,$note->user_id);
+
+                break;
+
+            case 'منتشر شده در رسانه ها':
+            $this->addToNoteHistory($note->id,'یادداشت در رسانه ها منتشر شد','انتشار در رسانه ها');
+            $this->sendMessage('یادداشت شما منتشر شد','یادداشت شما در رسانه ها منتشر شد',0,$note->user_id);
+
+                break;
+
+            case 'ارزیابی مجدد':
+            $this->addToNoteHistory($note->id,'یادداشت برای بررسی مجدد ارسال شد.','درخواست بررسی محتوایی مجدد');
+            $this->sendMessage('ارزیابی مجدد','یادداشتی برای ارزیابی مجدد به شما ارجاع شد',0,$note->nazer_id);
+
+                break;
+
+            case 'ارزیابی شکلی':
+            $this->addToNoteHistory($note->id,'یادداشت برای بررسی شکلی ارسال شد.','ارزیابی شکلی');
+            $this->sendMessage('یادداشت جدید برای ارزیابی','یادداشتی جهت ارزیابی شکلی به شما ارجاع شد',0,$note->arzyab_id);
+
+                break;
+
+            case 'نهایی شده':
+            $this->addToNoteHistory($note->id,'یادداشت نهایی شد.','نهایی سازی');
+
+                break;
+
+            case 'در صف انتشار رسانه ها':
+            $this->addToNoteHistory($note->id,'یادداشت جهت انتشار در رسانه ها ارسال شد.','در صف انتشار رسانه');
+
+                break;
+
+            case 'بایگانی':
+            $this->addToNoteHistory($note->id,'یادداشت بایگانی شد.','بایگانی شده');
+            $this->sendMessage('یادداشت بایگانی شد','یادداشت شما بایگانی شد.',0,$note->user_id);
+
+                break;
+            
+            default:
+            $this->addToNoteHistory($note->id,'یادداشت توسط یادداشت نویس ارسال شد.','ارسال یادداشت');
+            $this->sendMessage('یادداشت جدید برای ارزیابی','شما یک یادداشت جدید برای ارزیابی دارید',0,$note->nazer_id);
+            //    dd('خطایی رخ داده است لطفا با مهندس مهدی عابدی با شماره 09395187902 تماس حاصل نمایید.');
+                break;
+        }
+
+        ##############################################################################################################
         #اصلاح یادداشت توسط یادداشت نویس
         //اول چک میکنیم که ببینیم چه کسی داره یادداشت را تغییر میده
             $current_user=auth()->id();
-            //یادداشت نویس
+            //######################################### یادداشت نویس ###################################################
             if ($current_user==$note->user_id) {
                 //ارسال نسخه اولیه
                 if ($note->status=="اعلام آمادگی") {
@@ -217,33 +294,26 @@ class NoteController extends Controller
                    if (Carbon::now()->diffInHours($note->updated_at)>48) {
                         $this->saveUserPoint(-2,'کسر امتیاز به خاطر ارسال نسخه اولیه یادداشت بعد از گذشت 48 ساعت از اعلام آمادگی');
                         #ثبت ارسال نسخه اولیه در تاریخچه یادداشت
-                        $this->addToNoteHistory($note->id,'نسخه اولیه توسط یادداشت نویس ارسال شد.','ارسال نسخه اولیه');
                     }
+
+                    $this->sendMessage('یادداشت جدید','یک یادداشت جدید برای بررسی محتوایی دارید',0,$note->nazer_id);
+                    $this->addToNoteHistory($note->id,'نسخه اولیه توسط یادداشت نویس ارسال شد.','ارسال نسخه اولیه');
                 }
                 //انجام اصلاح برای ارزیابی مجدد
                 else{
                     //تغییر وضعیت برای انجام ارزیابی مجدد توسط ناظر محتوایی
                     //یادداشت نویس فقط 24 ساعت وقت دارد که یادداشت را اصلاح کند
                     $data['status']='ارزیابی مجدد';
+
+                    $this->sendMessage('ارزیابی مجدد','یادداشتی برای ارزیابی مجدد به شما ارجاع شد',0,$note->nazer_id);
                     $this->addToNoteHistory($note->id,'یادداشت نویس یادداشت را برای ارزیابی مجدد اصلاح کرد.','اصلاح توسط یادداشت نویس');
-                }
-
-                
-                
+                }   
             }
-            //ناظر محتوایی
-            elseif ($current_user==$note->nazer_id) {
-
-            }
-            //مدیر حلقه برای تعیین ناظر محتوایی
-            else {
-                $this->addToNoteHistory($note->id,'مدیر حلقه ناظر محتوایی یادداشت را مشخص کرد.','تعیین ناظر محتوایی');
-            }
-
 
         //پایان 
+
         $note->update($data);
-        
+        $this->getFile($request,$note->id);
         return redirect('notes')->with('message','یادداشت شما با موفقیت ثبت شد.');
     }
 
@@ -253,9 +323,16 @@ class NoteController extends Controller
      * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Note $note)
+    public function destroy($id)
     {
-        //
+        $note = Note::find($id);
+        
+        if ($note->delete()) {
+
+            $this->deleteFile($note->id);
+            return redirect('notes')->with('message', 'یادداشت با موفقیت حذف شد.');
+        }
+        return redirect('users')->with('message', 'خطایی در هنگام حذف یادداشت رخ داده است.');
     }
 
     /**
@@ -335,7 +412,7 @@ class NoteController extends Controller
            //ثبت در تاریخچه یادداشت
            $this->addToNoteHistory($note->id,'یادداشت ارزیابی شد و نشان نقره ای گرفت','ارزیابی');
           //ارسال پیام به یادداشت نویس
-          $this->sendMessage('یادداشت شما ارزیابی شد','یادداشت شما ارزیابی شد و نشان طلایی گرفت',0,$note->user_id);
+          $this->sendMessage('یادداشت شما ارزیابی شد','یادداشت شما ارزیابی شد و نشان نقره ای گرفت',0,$note->user_id);
               break;
 
            case ($miyangin >10 && $miyangin<14):
@@ -345,7 +422,7 @@ class NoteController extends Controller
            //ثبت در تاریخچه یادداشت
            $this->addToNoteHistory($note->id,'یادداشت ارزیابی شد و نشان برنزی گرفت','ارزیابی');
             //ارسال پیام به یادداشت نویس
-            $this->sendMessage('یادداشت شما ارزیابی شد','یادداشت شما ارزیابی شد و نشان طلایی گرفت',0,$note->user_id);
+            $this->sendMessage('یادداشت شما ارزیابی شد','یادداشت شما ارزیابی شد و نشان برنزی گرفت',0,$note->user_id);
             break;
            
            default:
@@ -537,6 +614,59 @@ class NoteController extends Controller
                 $this->sendMessage($title,$body,$sender=0,$user->id);
            }
        }
+
+
+       
+      /**
+     * بارگزاری تصویر پروفایل کاربر
+     */
+
+    private function getFile(Request $request,$id)
+    {
+      
+        if ($request->hasFile('docs')) 
+        {
+            try{
+                //dd('upload 11file');
+                $file = $request->file('docs');
+                $fileName = $id.'.docx';
+                $destination =public_path() .'/uploads/notes';
+
+               
+                if(file_exists($destination.'/'.$fileName)){
+                    unlink($destination.'/'.$fileName);
+                   
+                }
+                $file->move($destination, $fileName);
+               // $data['file'] = $fileName;
+            }
+            catch (\Exception $e) {
+                return $e->getMessage();
+            }
+
+        }
+        
+        return true;
+    }
+
+    
+/** 
+ * Deleting user profile picture when we delete the user
+ */
+
+    public function deleteFile($file)
+    {
+        if (!empty($file)) {
+            $filepath = public_path() . '/uploads/notes/' . $file.'.docx';
+
+            if (file_exists($filepath)) {
+                unlink($filepath);
+            }
+
+        }
+
+    }
+
 
 }//end of class
 
